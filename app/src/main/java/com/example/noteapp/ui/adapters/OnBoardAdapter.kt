@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.noteapp.ui.fragment.onboard.OnBoardPagerFragment
+import com.example.noteapp.ui.fragment.onboard.OnBoardPagerFragment.Companion.ARG_ONBOARD_POSITION
 
 class OnBoardAdapter(fragment: Fragment): FragmentStateAdapter(fragment){
 
@@ -11,9 +12,9 @@ class OnBoardAdapter(fragment: Fragment): FragmentStateAdapter(fragment){
         return 3
     }
 
-    override fun createFragment(position: Int): OnBoardPagerFragment = OnBoardPagerFragment().apply {
+    override fun createFragment(position: Int) = OnBoardPagerFragment().apply{
         arguments = Bundle().apply {
-            putInt(OnBoardPagerFragment.ARG_ONBOARD_POSITION,position)
+            putInt(ARG_ONBOARD_POSITION,position)
         }
 
     }
