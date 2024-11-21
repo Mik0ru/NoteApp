@@ -14,23 +14,21 @@
 
     <TextView
         android:text="Notes"
-        android:fontFamily="@font/pottaone"
+        android:fontFamily="@font/potta_one_regular"
         android:textSize="24sp"
         android:textColor="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="68dp"
         />
     <com.google.android.material.tabs.TabLayout
         android:backgroundTint="#252525"
         android:id="@+id/into_tab_layout"
         android:layout_width="wrap_content"
         android:layout_height="15dp"
-
         android:layout_marginTop="204dp"
         android:layout_gravity="center"
-
         app:tabBackground="@drawable/default_dot"
         app:tabIndicator="@drawable/tab_indicator"
         app:tabIndicatorColor="#d88b02"

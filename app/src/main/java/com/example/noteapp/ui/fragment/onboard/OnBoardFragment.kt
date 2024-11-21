@@ -37,25 +37,27 @@ class OnBoardFragment : Fragment() {
     }
 
     private fun setupListeners() = with(binding.viewpager) {
-        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position == 2){
-                    binding.txtSkip.visibility = View.INVISIBLE
-                    binding.btnStart.animate().translationY(0f).alpha(1f);
-                    binding.btnStart.setOnClickListener {
+                binding.apply {if (position == 2){
+                    txtSkip.visibility = View.INVISIBLE
+                    btnStart.animate().translationY(0f).alpha(1f)
+                    btnStart.setOnClickListener {
                         findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment)
                     }
                 }else{
-                    binding.btnStart.animate().translationY(600f).alpha(0f)
-                    binding.txtSkip.visibility = View.VISIBLE
-                    binding.txtSkip.setOnClickListener {
-                        if (currentItem < 3){
+                    btnStart.animate().translationY(600f).alpha(0f)
+                    txtSkip.visibility = View.VISIBLE
+                    txtSkip.setOnClickListener {
+                        if (currentItem < 3) {
                             setCurrentItem(currentItem + 2, true)
                         }
                     }
-                }
-            }
-        })
+                }  }
+
+             }
+         }
+     )
     }
 }
