@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/onBoardFragment">
+    app:startDestination="@id/noteFragment">
 
     <fragment
         android:id="@+id/onBoardFragment"
@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_on_board" >
         <action
             android:id="@+id/action_onBoardFragment_to_noteFragment"
-            app:destination="@id/noteFragment" />
+            app:destination="@id/noteFragment"
+            app:enterAnim="@anim/slide_in_right"/>
     </fragment>
     <fragment
         android:id="@+id/onBoardPagerFragment"
@@ -23,5 +24,20 @@
         android:id="@+id/noteFragment"
         android:name="com.example.noteapp.ui.fragment.note.NoteFragment"
         android:label="fragment_note"
-        tools:layout="@layout/fragment_note" />
+        tools:layout="@layout/fragment_note" >
+        <action
+            android:id="@+id/action_noteFragment_to_noteDetailFragment"
+            app:destination="@id/noteDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_noteFragment_to_onBoardFragment"
+            app:destination="@id/onBoardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="com.example.noteapp.ui.fragment.note.NoteDetailFragment"
+        android:label="fragment_note_detail"
+        tools:layout="@layout/fragment_note_detail" />
 </navigation>

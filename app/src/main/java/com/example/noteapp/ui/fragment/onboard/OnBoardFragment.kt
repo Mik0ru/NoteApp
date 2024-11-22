@@ -10,12 +10,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.noteapp.R
 import com.example.noteapp.databinding.FragmentOnBoardBinding
 import com.example.noteapp.ui.adapters.OnBoardAdapter
+import com.example.noteapp.utils.PreferenceHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
 
 class OnBoardFragment : Fragment() {
 
     private lateinit var binding : FragmentOnBoardBinding
+    private val sharedPreferences = PreferenceHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,7 @@ class OnBoardFragment : Fragment() {
     }
 
     private fun setupListeners() = with(binding.viewpager) {
+        sharedPreferences.unit(requireContext())
         registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -44,6 +47,7 @@ class OnBoardFragment : Fragment() {
                     txtSkip.visibility = View.INVISIBLE
                     btnStart.animate().translationY(0f).alpha(1f)
                     btnStart.setOnClickListener {
+                        sharedPreferences.isOnboard = false
                         findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment)
                     }
                 }else{
