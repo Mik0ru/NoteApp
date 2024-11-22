@@ -13,4 +13,8 @@ class PreferenceHelper {
     var isOnboard:Boolean
         get() = sharedPreference.getBoolean("isOnboard", true)
         set(value: Boolean) = sharedPreference.edit().putBoolean("isOnboard", value).apply()
+
+    var isLogged:Boolean
+        get() = sharedPreference.getBoolean("isLogged", false)
+        set(value) = sharedPreference.edit().putBoolean("isLogged",value).apply()
 }

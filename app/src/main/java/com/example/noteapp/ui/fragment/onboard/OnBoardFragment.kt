@@ -48,7 +48,11 @@ class OnBoardFragment : Fragment() {
                     btnStart.animate().translationY(0f).alpha(1f)
                     btnStart.setOnClickListener {
                         sharedPreferences.isOnboard = false
-                        findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment)
+                        if (sharedPreferences.isLogged) {
+                            findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment)
+                        }else{
+                            findNavController().navigate(R.id.action_onBoardFragment_to_authFragment)
+                        }
                     }
                 }else{
                     btnStart.animate().translationY(600f).alpha(0f)
@@ -58,8 +62,8 @@ class OnBoardFragment : Fragment() {
                             setCurrentItem(currentItem + 2, true)
                         }
                     }
-                }  }
-
+                }
+                }
              }
          }
      )

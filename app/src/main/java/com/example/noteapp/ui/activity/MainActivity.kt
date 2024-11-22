@@ -19,11 +19,16 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         val navController = navHostFragment.navController
+
         if (sharedPreferences.isOnboard){
             navController.navigate(R.id.onBoardFragment)
         } else {
             navController.popBackStack()
-            navController.navigate(R.id.noteFragment)
+            if(sharedPreferences.isLogged){
+                navController.navigate(R.id.noteFragment)
+            }else{
+                navController.navigate(R.id.authFragment)
+            }
         }
     }
 
