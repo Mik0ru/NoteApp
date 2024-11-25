@@ -30,32 +30,32 @@ import com.google.firebase.ktx.Firebase
 
 class AuthFragment : Fragment() {
 
-    private lateinit var binding : FragmentAuthBinding
-    private val sharedPreferences = PreferenceHelper()
+     private lateinit var binding: FragmentAuthBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var  googleSignInClient: GoogleSignInClient
-    private  val signInLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
-            if (result.resultCode == Activity.RESULT_OK){
-                val data: Intent? = result.data
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                try {
-                    val account = task.getResult(ApiException::class.java)
-                    firebaseAuthWithGoogle(account?.idToken)
-                }catch (e:ApiException){
-                    updateUI(null)
-                }
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val signInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK){
+            val data: Intent? = result.data
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                firebaseAuthWithGoogle(account?.idToken)
+            } catch (e:ApiException){
+                updateUI(null)
             }
         }
+
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAuthBinding.inflate(inflater,container,false)
+    ): View {
+        binding = FragmentAuthBinding.inflate(layoutInflater)
         auth = Firebase.auth
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.web_auth_id))
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
@@ -69,33 +69,38 @@ class AuthFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.btnAuth.setOnClickListener{
+        binding.btnAuth.setOnClickListener {
             signInLauncher.launch(googleSignInClient.signInIntent)
         }
     }
 
-    private fun firebaseAuthWithGoogle(idToken: String?) {
-        val credential = GoogleAuthProvider.getCredential(idToken,null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(requireActivity()){task ->
-                if(task.isSuccessful){
-                    val user = auth.currentUser
-                    updateUI(user)
-                }else{
-                    updateUI(null)
-                }
-            }
+    private fun updateUI(user: FirebaseUser?) {
+        val sharedPreferences = PreferenceHelper()
+        sharedPreferences.unit(requireContext())
+        if (user != null){
+            sharedPreferences.isLogged = true
+            findNavController().navigate(R.id.action_authFragment_to_noteFragment)
+        } else {
+            sharedPreferences.isLogged = false
+            Toast.makeText(requireContext(), "Аутентификация не удалась", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun updateUI(user :FirebaseUser?) {
-        if (user != null){
-            sharedPreferences.unit(requireContext())
-            sharedPreferences.isLogged = true
-            findNavController().navigate(R.id.noteFragment)
-        }else{
-            Toast.makeText(requireContext(),"Аунтефикация не удалась", Toast.LENGTH_SHORT).show()
+    private fun firebaseAuthWithGoogle(idToken: String?) {
+        if (idToken != null) {
+            val credential = GoogleAuthProvider.getCredential(idToken, null)
+            auth.signInWithCredential(credential)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        updateUI(null)
+                    }
+                }
+        } else {
+            updateUI(null)
         }
-
     }
 
 

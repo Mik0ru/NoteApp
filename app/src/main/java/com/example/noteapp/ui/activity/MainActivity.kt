@@ -8,13 +8,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.noteapp.R
+import com.example.noteapp.databinding.ActivityMainBinding
 import com.example.noteapp.utils.PreferenceHelper
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     private val sharedPreferences = PreferenceHelper()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         sharedPreferences.unit(this)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
@@ -24,9 +29,9 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.onBoardFragment)
         } else {
             navController.popBackStack()
-            if(sharedPreferences.isLogged){
+            if (sharedPreferences.isLogged){
                 navController.navigate(R.id.noteFragment)
-            }else{
+            } else{
                 navController.navigate(R.id.authFragment)
             }
         }

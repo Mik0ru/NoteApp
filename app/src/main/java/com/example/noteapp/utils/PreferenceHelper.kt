@@ -18,7 +18,7 @@ class PreferenceHelper {
         get() = sharedPreference.getBoolean("isLogged", false)
         set(value) = sharedPreference.edit().putBoolean("isLogged",value).apply()
 
-    var Layout: Int
-        get() = sharedPreference.getInt("Layout", 1)
-        set(value) = sharedPreference.edit().putInt("Layout", value)!!.apply()
+    var isLinear: Boolean
+        get() = sharedPreference.getBoolean("isLinear", true)
+        set(value) = sharedPreference.edit().putBoolean("isLinear", value).apply()
 }

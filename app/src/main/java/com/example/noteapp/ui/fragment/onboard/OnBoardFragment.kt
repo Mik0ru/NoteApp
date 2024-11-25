@@ -49,7 +49,7 @@ class OnBoardFragment : Fragment() {
                     btnStart.setOnClickListener {
                         sharedPreferences.isOnboard = false
                         if (sharedPreferences.isLogged) {
-                            findNavController().navigate(R.id.action_onBoardFragment_to_noteFragment)
+                            findNavController().navigate(R.id.noteFragment)
                         }else{
                             findNavController().navigate(R.id.action_onBoardFragment_to_authFragment)
                         }
