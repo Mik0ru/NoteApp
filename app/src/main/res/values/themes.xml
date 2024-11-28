@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.NoteApp" parent="Base.Theme.NoteApp" />
+    <style name="Style_TextView">
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

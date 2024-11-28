@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val sharedPreferences = PreferenceHelper()
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var actionBar: ActionBarDrawerToggle
-    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 binding.navView.visibility = View.GONE
             }
         }
-        setupListeners()
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
             binding.main.closeDrawers()
@@ -71,8 +68,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListeners() {
-
+    public fun openDrawer(){
+        drawerLayout = binding.main
+        drawerLayout.openDrawer(GravityCompat.START)
     }
 
     override fun onSupportNavigateUp(): Boolean {
