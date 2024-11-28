@@ -2,4 +2,7 @@
     <string name="app_name">NoteApp</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="web_auth_id">1049700467685-t7k4q3rtnacibcaukntvd0sqhvk88gsu.apps.googleusercontent.com</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
 </resources>

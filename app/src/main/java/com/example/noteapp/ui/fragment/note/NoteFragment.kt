@@ -7,7 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noteapp.App
 import com.example.noteapp.R
 import com.example.noteapp.data.models.NoteModel
+import com.example.noteapp.databinding.ActivityMainBinding
 import com.example.noteapp.databinding.AlertDialogBinding
 import com.example.noteapp.databinding.FragmentNoteBinding
 import com.example.noteapp.ui.adapters.NoteAdapter
@@ -26,6 +30,7 @@ import org.checkerframework.checker.index.qual.Positive
 class NoteFragment : Fragment(), OnClickItem {
 
     private lateinit var binding: FragmentNoteBinding
+    private lateinit var activityBinding : ActivityMainBinding
     private lateinit var noteAdapter: NoteAdapter
     private val sharedPreferences = PreferenceHelper()
     private var isLinear = true
@@ -34,12 +39,13 @@ class NoteFragment : Fragment(), OnClickItem {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteBinding.inflate(inflater, container, false)
+        binding = FragmentNoteBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activityBinding = ActivityMainBinding.inflate(layoutInflater)
         sharedPreferences.unit(requireContext())
         isLinear = sharedPreferences.isLinear
         noteAdapter = NoteAdapter(this, this, isLinear)
@@ -74,6 +80,14 @@ class NoteFragment : Fragment(), OnClickItem {
             noteAdapter.setLinearLayout(isLinear)
             sharedPreferences.isLinear = isLinear
 
+        }
+
+        btnMenu.setOnClickListener{
+            if ((activityBinding.main).isDrawerOpen(GravityCompat.START)) {
+                (activityBinding.main).closeDrawer(GravityCompat.START)
+            } else {
+                (activityBinding.main).openDrawer(GravityCompat.START)
+            }
         }
 
     }
